@@ -16,9 +16,11 @@ inline size_t partional(vector<int> &vec, size_t beg, size_t end)
 {
     // 随机选取一个下标
     int mid = beg + ((end - beg) >> 1);
-    int small = beg - 1;
+    int val = vec[mid];
     swap(vec, mid, end);
-    int val = vec[end];
+    
+    // 左右两边对半分
+    int small = beg - 1;
     for (size_t i = beg; i < end; i++)
     {
         if (vec[i] < val)

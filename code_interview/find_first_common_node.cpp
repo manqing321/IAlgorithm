@@ -49,23 +49,16 @@ ListNode *find_first_common_node(ListNode *first, ListNode *second)
         }
     }
     // 最终一起往前走，会在第一个公共节点碰头
-    for (size_t i = 0; i < len2; i++)
+    while (longer != nullptr && shorter != nullptr)
     {
-        if (longer != nullptr && shorter != nullptr)
+        if (longer == shorter)
         {
-            if (longer == shorter)
-            {
-                return longer;
-            }
-            else
-            {
-                longer = longer->next;
-                shorter = shorter->next;
-            }
+            return longer;
         }
         else
         {
-            break;
+            longer = longer->next;
+            shorter = shorter->next;
         }
     }
     return nullptr;

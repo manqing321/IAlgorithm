@@ -4,71 +4,27 @@
 #include <deque>
 #include <queue>
 using namespace std;
-
 class Solution {
-public:
-    bool canBeValid(string s, string locked) {
-        int diff = 0;
-        auto que = queue<int>();
-        for (size_t i = 0; i < s.length(); i++)
+    private:
+        int ssum(int first_elem, int last_elem, int cnt)
         {
-            char ch = s[i];
-            if(ch == ')'){
-                if(locked[i] == '0'){
-                    que.push(i);
-                }
-                if(diff == 0){
-                    if(que.size() == 0){
-                        return false;
-                    }else{
-                        auto idx = que.front();
-                        que.pop();
-                        s[idx] = '(';
-                        diff += 1;
-                    }
-                }else{
-                    diff -= 1;
-                }
-            }else{
-                diff += 1;
-            }
-        } 
-
-        diff = 0;
-        que = queue<int>();
-        for (int i = s.length() - 1; i >= 0; i--)
-        {
-            char ch = s[i];
-            if(ch == '('){
-                if(locked[i] == '0'){
-                    que.push(i);
-                }
-                if(diff == 0){
-                    if(que.size() == 0){
-                        return false;
-                    }else{
-                        auto idx = que.front();
-                        que.pop();
-                        s[idx] = ')';
-                        diff += 1;
-                    }
-                }else{
-                    diff -= 1;
-                }
-            }else{
-                diff += 1;
-            }
+            return (first_elem + last_elem) * cnt / 2;
         }
-        
-        return !diff;
-    }
-};
+    public:
+        int minimumSum(int n, int k) {            
+            if (n <= k / 2){
+                return ssum(1, n, n);
+            }
+            return ssum(1, k / 2, k / 2) + ssum(k, k - 1 + n - k / 2 , n - k / 2);
+        }
+    
+    };
 
 int main()
 {
-    string s = "))()))";
-    string locked = "010100";
+    int n = 4;
+    int k = 5;
     auto sol = Solution();
-    auto ans = sol.canBeValid(s, locked);
+    auto ans = sol.minimumSum(n, k);
     cout << ans << endl;
 }
